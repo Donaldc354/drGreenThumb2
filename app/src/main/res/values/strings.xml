@@ -10,4 +10,11 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="plant_img_desc">"Plant Desc....Green leaves"</string>
+    <string name="plant_info">"Some info about this plant"</string>
+    <string name="action_favorites_list">"here is a list of favorites</string>
+    <string name="action_find_supplies">"FIND SUPPLYS"</string>
+    <string name="action_utilities">"UTILITIES"</string>
+    <string name="txt_entry_plant_name">"PLANT NAME"</string>
+    <string name="plant_name_title">"PLANT TITLE"</string>
 </resources>
