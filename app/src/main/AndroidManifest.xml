@@ -9,7 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".appColor"></activity>
+        <activity android:name=".newsletters"></activity>
+        <activity android:name=".personalization" />
+        <activity android:name=".interests" />
+        <activity android:name=".editAccountInfo" />
+        <activity android:name=".permissions" />
+        <activity android:name=".notifications" />
+        <activity android:name=".notifcations" />
+        <activity android:name=".appColor" />
         <activity android:name=".wateringSchedule" />
         <activity android:name=".settingsPage" />
         <activity android:name=".utilitiesPage" />
