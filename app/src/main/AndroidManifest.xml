@@ -19,6 +19,8 @@
         <activity android:name=".appColor" />
         <activity android:name=".wateringSchedule" />
         <activity android:name=".settingsPage" />
+        <activity android:name=".plantInfoPage"></activity>
+        <activity android:name=".settingsPage" />
         <activity android:name=".utilitiesPage" />
         <activity android:name=".plantSearchPage" />
         <activity android:name=".homePage" />
