@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".wateringSchedule"></activity>
+        <activity android:name=".appColor"></activity>
+        <activity android:name=".wateringSchedule" />
         <activity android:name=".settingsPage" />
         <activity android:name=".utilitiesPage" />
         <activity android:name=".plantSearchPage" />
