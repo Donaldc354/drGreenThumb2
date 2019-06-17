@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "774805195823",
+    "firebase_url": "https://dgt2-aa.firebaseio.com",
+    "project_id": "dgt2-aa",
+    "storage_bucket": "dgt2-aa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:774805195823:android:b76df4ab83361627",
+        "android_client_info": {
+          "package_name": "com.example.drgreenthumb2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "774805195823-34f2cn2e393gdi1ui3bsmc8k35318u5p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.drgreenthumb2",
+            "certificate_hash": "8382d929cc689e767aa7a28425a79af2b04e61e6"
+          }
+        },
+        {
+          "client_id": "774805195823-brjb6hq72qr035pfrf0pket29cv1bda9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBu4X6ZkR1hSDDXFaS6eYHKc94Gt_V6zps"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "774805195823-brjb6hq72qr035pfrf0pket29cv1bda9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
