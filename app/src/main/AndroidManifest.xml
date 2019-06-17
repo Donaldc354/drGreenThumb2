@@ -9,18 +9,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".loginPage"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme.NoActionBar">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
         <activity android:name=".newsletters"></activity>
         <activity android:name=".personalization" />
         <activity android:name=".interests" />
         <activity android:name=".editAccountInfo" />
-        <activity android:name=".permissions" />
-        <activity android:name=".notifications" />
-        <activity android:name=".notifcations" />
         <activity android:name=".appColor" />
         <activity android:name=".wateringSchedule" />
         <activity android:name=".settingsPage" />
         <activity android:name=".plantInfoPage"></activity>
-        <activity android:name=".settingsPage" />
         <activity android:name=".utilitiesPage" />
         <activity android:name=".plantSearchPage" />
         <activity android:name=".homePage" />
@@ -34,9 +35,14 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".settingsPage" />
+        <activity android:name=".utilitiesPage" />
+        <activity android:name=".plantSearchPage" />
+        <activity android:name=".homePage" />
     </application>
 
 </manifest>
