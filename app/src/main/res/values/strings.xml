@@ -17,4 +17,7 @@
     <string name="action_favorites_list">"Favorites List"</string>
     <string name="plant_name_title">"Plant Name"</string>
     <string name="plant_img_desc">"Image of Plant"</string>
+    <string name="action_back">"Go Back"</string>
+    <string name="searching_for">"Search for"</string>
+    <string name="register_account">"Register"</string>
 </resources>

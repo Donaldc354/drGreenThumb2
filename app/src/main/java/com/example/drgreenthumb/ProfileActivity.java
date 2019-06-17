@@ -26,10 +26,10 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        Email = (TextView)findViewById(R.id.profileEmail);
-        Uid = (TextView)findViewById(R.id.profileUid);
+        Email = findViewById(R.id.profileEmail);
+        Uid = findViewById(R.id.profileUid);
         mAuth = FirebaseAuth.getInstance();
-        logout = (Button)findViewById(R.id.button_logout);
+        logout = findViewById(R.id.button_logout);
         user = mAuth.getCurrentUser();
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,7 +37,7 @@ public class ProfileActivity extends AppCompatActivity {
                 if (v==logout){
                     if (user != null) {
                         mAuth.signOut();
-                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                        startActivity(new Intent(getApplicationContext(), loginPage.class));
                     }
                 }
             }
@@ -50,4 +50,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
     }
+
+
+
 }
