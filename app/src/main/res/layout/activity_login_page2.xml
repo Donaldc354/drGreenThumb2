@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.drgreenthumb.loginPage">
+    tools:context="com.example.drgreenthumb.loginPage"
+    android:background="@drawable/birch"
+    >
 
 
     <TextView
@@ -24,32 +26,39 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="88dp"
         android:ems="10"
         android:hint="email"
         android:inputType="textPersonName"
+        android:textAllCaps="true"
+        android:textSize="34sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/txtPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtBanner" />
 
     <EditText
         android:id="@+id/txtPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="256dp"
         android:ems="10"
         android:hint="password"
         android:inputType="textPersonName"
         android:padding="5dp"
+        android:textAllCaps="true"
         android:textColor="#000"
+        android:textSize="34sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/btnLogin"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="242dp"
+        android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginTop="592dp"
         android:background="#000"
@@ -63,8 +72,8 @@
 
     <Button
         android:id="@+id/btnRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="239dp"
+        android:layout_height="47dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:background="#000"
