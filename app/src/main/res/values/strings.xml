@@ -18,6 +18,8 @@
     <string name="plant_name_title">"Plant Name"</string>
     <string name="plant_img_desc">"Image of Plant"</string>
     <string name="action_back">"Go Back"</string>
-    <string name="searching_for">"Search for"</string>
+    <string name="action_add_to_favorites">Add to Favorites</string>
+    <string name="action_purchase_plant">Purchase Plant</string>
+    <string name="searching_for">"Searching For: ' '"</string>
     <string name="register_account">"Register"</string>
 </resources>

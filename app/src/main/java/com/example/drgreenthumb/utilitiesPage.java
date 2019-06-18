@@ -13,9 +13,9 @@ public class utilitiesPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_utilities_page);
 
-        Button button = (Button)findViewById(R.id.button5);
+        Button wateringSchedule = findViewById(R.id.btnWateringSchedule);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        wateringSchedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(utilitiesPage.this, wateringSchedule.class);
@@ -25,9 +25,9 @@ public class utilitiesPage extends AppCompatActivity {
             }
         });
 
-        Button button1 = (Button)findViewById(R.id.button7);
+        Button interests = findViewById(R.id.btnInterests);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        interests.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(utilitiesPage.this, interests.class);
@@ -37,9 +37,9 @@ public class utilitiesPage extends AppCompatActivity {
             }
         });
 
-        Button button2 = (Button)findViewById(R.id.button6);
+        Button personalization = findViewById(R.id.btnPersonalization);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        personalization.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(utilitiesPage.this, personalization.class);
@@ -49,9 +49,9 @@ public class utilitiesPage extends AppCompatActivity {
             }
         });
 
-        Button button3 = (Button)findViewById(R.id.button8);
+        Button newsletters = findViewById(R.id.btnNewsletters);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        newsletters.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(utilitiesPage.this, newsletters.class);
@@ -60,5 +60,7 @@ public class utilitiesPage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }
