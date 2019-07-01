@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.drgreenthumb.loginPage"
     android:background="@drawable/birch"
-    >
+    tools:context="com.example.drgreenthumb.loginPage">
 
 
     <TextView
@@ -61,10 +60,12 @@
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginTop="592dp"
+        android:layout_marginBottom="89dp"
         android:background="#000"
         android:onClick="loginUser"
         android:text="Login"
         android:textColor="#fff"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,16 +75,16 @@
         android:id="@+id/btnRegister"
         android:layout_width="239dp"
         android:layout_height="47dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="646dp"
+        android:layout_marginBottom="38dp"
         android:background="#000"
         android:onClick="registerUser"
         android:text="Register"
         android:textColor="#fff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
