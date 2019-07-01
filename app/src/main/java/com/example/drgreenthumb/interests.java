@@ -13,16 +13,6 @@ public class interests extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interests);
 
-        Button button = (Button)findViewById(R.id.home6);
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(interests.this, homePage.class);
-                Bundle bundle = new Bundle();
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

@@ -82,8 +82,7 @@ public class loginPage extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             //currentUser = mAuth.getCurrentUser();
                             finish();
-                            startActivity(new Intent(getApplicationContext(),
-                                    homePage.class));
+                            startActivity(new Intent(getApplicationContext(), homePage.class));
                         } else {
                             Toast.makeText(loginPage.this, "couldn't login",
                                     Toast.LENGTH_SHORT).show();

@@ -9,17 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".newsletters"></activity>
-        <activity android:name=".personalization" />
-        <activity android:name=".interests" />
-        <activity android:name=".editAccountInfo" />
-        <activity android:name=".permissions" />
-        <activity android:name=".notifications" />
-        <activity android:name=".notifcations" />
-        <activity android:name=".appColor" />
-        <activity android:name=".wateringSchedule" />
-        <activity android:name=".settingsPage" />
-        <activity android:name=".plantInfoPage"></activity>
         <activity android:name=".loginPage"
         android:label="@string/app_name"
         android:theme="@style/AppTheme.NoActionBar">
@@ -29,11 +18,57 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
         </activity>
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".settingsPage" />
-        <activity android:name=".utilitiesPage" />
-        <activity android:name=".plantSearchPage" />
-        <activity android:name=".homePage" />
+        <activity android:name=".homePage"/>
+        <activity android:name=".newsletters"
+            android:parentActivityName=".utilitiesPage">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.drgreenthumb.utilitiesPage"/>
+        </activity>
+        <activity android:name=".personalization"
+            android:parentActivityName=".utilitiesPage">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.drgreenthumb.utilitiesPage"/>
+        </activity>
+        <activity android:name=".interests"
+            android:parentActivityName=".utilitiesPage">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.drgreenthumb.utilitiesPage"/>
+        </activity>
+        <activity android:name=".editAccountInfo"
+            android:parentActivityName=".settingsPage">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.drgreenthumb.settingsPage"/>
+        </activity>
+        <activity android:name=".appColor"
+            android:parentActivityName=".settingsPage">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.drgreenthumb.settingsPage"/>
+        </activity>
+        <activity android:name=".wateringSchedule"
+            android:parentActivityName=".utilitiesPage">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.drgreenthumb.utilitiesPage"/>
+        </activity>
+        <activity android:name=".settingsPage"
+            android:parentActivityName=".homePage">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.drgreenthumb.homePage"/>
+        </activity>
+        <activity android:name=".plantInfoPage"
+            android:parentActivityName=".homePage">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.drgreenthumb.homePage"/>
+        </activity>
+        <activity android:name=".utilitiesPage"
+            android:parentActivityName=".homePage">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.drgreenthumb.homePage"/>
+        </activity>
+        <activity android:name=".plantSearchPage"
+            android:parentActivityName=".homePage">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.drgreenthumb.homePage"/>
+        </activity>
     </application>
 
 </manifest>
