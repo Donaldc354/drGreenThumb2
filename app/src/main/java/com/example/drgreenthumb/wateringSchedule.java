@@ -9,6 +9,8 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 
@@ -23,8 +25,15 @@ public class wateringSchedule extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watering_schedule);
 
-        final ConstraintLayout temp = findViewById(R.id.wateringScheduleLayout);
-        temp.setBackgroundColor(appColor.setAppColor());
+        //final ConstraintLayout temp = findViewById(R.id.wateringScheduleLayout);
+        //temp.setBackgroundColor(appColor.setAppColor());
+
+        RecyclerView rv = (RecyclerView)findViewById(R.id.rv);
+        rv.setHasFixedSize(true);
+
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        rv.setLayoutManager(llm);
+
 
         createNotificationChannel();
 
