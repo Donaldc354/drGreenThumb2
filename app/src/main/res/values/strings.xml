@@ -22,4 +22,6 @@
     <string name="action_purchase_plant">Purchase Plant</string>
     <string name="searching_for">"Searching For: ' '"</string>
     <string name="register_account">"Register"</string>
+    <string name="channel_name">"Watering Reminder"</string>
+    <string name="channel_desc">"Reminds user to water plants."</string>
 </resources>
