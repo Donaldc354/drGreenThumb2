@@ -10,10 +10,14 @@ import android.widget.Button;
 
 public class appColor extends AppCompatActivity {
 
+    private static int globalAppColor;
+    //public int globalAppColor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_color);
+
+
 
         Button white = findViewById(R.id.btnWhite);
         Button red = findViewById(R.id.btnRed);
@@ -23,12 +27,14 @@ public class appColor extends AppCompatActivity {
         Button blue = findViewById(R.id.btnBlue);
         Button cyan = findViewById(R.id.btnCyan);
         Button purple = findViewById(R.id.btnPurple);
+        Button save = findViewById(R.id.btnSave);
 
         final ConstraintLayout constraintLayout = findViewById(R.id.constLayout);
 
         white.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                globalAppColor = getResources().getColor(R.color.white);
                 constraintLayout.setBackgroundColor(getResources().getColor(R.color.white));
             }
         });
@@ -36,6 +42,7 @@ public class appColor extends AppCompatActivity {
         red.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                globalAppColor = getResources().getColor(R.color.red);
                 constraintLayout.setBackgroundColor(getResources().getColor(R.color.red));
             }
         });
@@ -43,6 +50,7 @@ public class appColor extends AppCompatActivity {
         orange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                globalAppColor = getResources().getColor(R.color.orange);
                 constraintLayout.setBackgroundColor(getResources().getColor(R.color.orange));
             }
         });
@@ -50,6 +58,7 @@ public class appColor extends AppCompatActivity {
         yellow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                globalAppColor = getResources().getColor(R.color.yellow);
                 constraintLayout.setBackgroundColor(getResources().getColor(R.color.yellow));
             }
         });
@@ -57,6 +66,7 @@ public class appColor extends AppCompatActivity {
         green.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                globalAppColor = getResources().getColor(R.color.green);
                 constraintLayout.setBackgroundColor(getResources().getColor(R.color.green));
             }
         });
@@ -64,6 +74,7 @@ public class appColor extends AppCompatActivity {
         cyan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                globalAppColor = getResources().getColor(R.color.cyan);
                 constraintLayout.setBackgroundColor(getResources().getColor(R.color.cyan));
             }
         });
@@ -71,6 +82,7 @@ public class appColor extends AppCompatActivity {
         blue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                globalAppColor = getResources().getColor(R.color.blue);
                 constraintLayout.setBackgroundColor(getResources().getColor(R.color.blue));
             }
         });
@@ -78,11 +90,25 @@ public class appColor extends AppCompatActivity {
         purple.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                globalAppColor = getResources().getColor(R.color.purple);
                 constraintLayout.setBackgroundColor(getResources().getColor(R.color.purple));
+            }
+        });
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(appColor.this, homePage.class);
+                Bundle bundle = new Bundle();
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
+    public static int setAppColor()
+    {
+        return globalAppColor;
+    }
 }

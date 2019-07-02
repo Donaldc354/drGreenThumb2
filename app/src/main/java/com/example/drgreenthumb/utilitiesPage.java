@@ -1,6 +1,7 @@
 package com.example.drgreenthumb;
 
 import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,9 @@ public class utilitiesPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_utilities_page);
+        final ConstraintLayout temp = findViewById(R.id.utilityLayout);
+
+        temp.setBackgroundColor(appColor.setAppColor());
 
         Button wateringSchedule = findViewById(R.id.btnWateringSchedule);
 

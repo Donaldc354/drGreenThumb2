@@ -1,6 +1,7 @@
 package com.example.drgreenthumb;
 
 import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +16,9 @@ public class plantSearchPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plant_search_page);
+
+        final ConstraintLayout temp = findViewById(R.id.plantSearchPageLayout);
+        temp.setBackgroundColor(appColor.setAppColor());
 
         Bundle b = getIntent().getExtras();
         searchingFor = b.getString("message");
