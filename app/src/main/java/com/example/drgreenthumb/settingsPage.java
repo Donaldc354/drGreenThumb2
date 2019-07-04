@@ -3,6 +3,7 @@ package com.example.drgreenthumb;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.Settings;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +15,9 @@ public class settingsPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings_page);
+
+        final ConstraintLayout temp = findViewById(R.id.settingsLayout);
+        temp.setBackgroundColor(appColor.setAppColor());
 
         Button color = findViewById(R.id.btnColor);
 

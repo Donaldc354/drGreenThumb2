@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/homepageLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".homePage">
@@ -89,17 +90,16 @@
         android:id="@+id/btnSettings"
         android:layout_width="120sp"
         android:layout_height="85sp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="570dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="76dp"
         android:background="@drawable/mybutton"
         android:text="@string/action_settings"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnUtilities"
-        app:layout_constraintVertical_bias="0.625" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnFavoritesList"
@@ -127,10 +127,10 @@
         android:layout_height="85sp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="366dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="280dp"
         android:background="@drawable/mybutton"
         android:text="@string/action_find_supplies"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -138,24 +138,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/imgPlant"
-        app:layout_constraintTop_toBottomOf="@+id/btnFavoritesList"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnUtilities"
         android:layout_width="120sp"
         android:layout_height="85sp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="466dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="180dp"
         android:background="@drawable/mybutton"
         android:text="@string/action_utilities"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnFindSupplies"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/txtinPlantName"
