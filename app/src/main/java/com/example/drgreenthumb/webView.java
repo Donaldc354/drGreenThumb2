@@ -2,12 +2,11 @@ package com.example.drgreenthumb;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.example.drgreenthumb.R;
-
-public class supplies extends AppCompatActivity {
+public class webView extends AppCompatActivity {
 
     private WebView webView;
     private String url1 = "https://www.homedepot.com/b/Outdoors-Garden-Center/N-5yc1vZbx6k/Ntk-extended/Ntt-";
@@ -16,7 +15,7 @@ public class supplies extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_supplies);
+        setContentView(R.layout.activity_webview);
 
         Bundle bundle = getIntent().getExtras();
 
@@ -31,5 +30,23 @@ public class supplies extends AppCompatActivity {
         webView.getSettings().setDomStorageEnabled(true);
         webView.setOverScrollMode(WebView.OVER_SCROLL_NEVER);
         webView.loadUrl(url1 + search + url2);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        if(event.getAction() == KeyEvent.ACTION_DOWN){
+            switch(keyCode){
+                case KeyEvent.KEYCODE_BACK:
+                    if(webView.canGoBack()){
+                        webView.goBack();
+                    } else {
+                        finish();
+                    }
+                    return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

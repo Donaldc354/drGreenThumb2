@@ -12,7 +12,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".supplies"></activity>
+        <activity
+            android:name=".favoritesList"
+            android:parentActivityName=".homePage">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.drgreenthumb.homePage" /></activity>
+        <activity
+            android:name=".webView"
+            android:parentActivityName=".homePage">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.drgreenthumb.homePage" />
+        </activity>
         <activity
             android:name=".loginPage"
             android:label="@string/app_name"

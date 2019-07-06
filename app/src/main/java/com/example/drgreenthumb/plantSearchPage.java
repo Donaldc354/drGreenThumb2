@@ -5,7 +5,10 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -18,6 +21,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import java.util.ArrayList;
+
 public class plantSearchPage extends AppCompatActivity {
 
     String searchingFor;
@@ -29,7 +34,10 @@ public class plantSearchPage extends AppCompatActivity {
     BufferedReader br;
     HttpURLConnection connection = null;
 
-
+    private ListView listView;
+    private ArrayAdapter arrayAdapter;
+    private ArrayList<String> resultsList = new ArrayList<>();
+    private ArrayList<String> resultsIDList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,17 +49,18 @@ public class plantSearchPage extends AppCompatActivity {
 
         final Bundle b = getIntent().getExtras();
 
+        searchingFor = b.getString("SEARCH_FOR");
+        TextView textView = findViewById(R.id.txtSearchingFor);
+        textView.setText("Searching For: '" + searchingFor + "'");
 
+        listView = findViewById(R.id.searchResults);
 
+        arrayAdapter = new ArrayAdapter(this, R.layout.mylistview, resultsList);
 
-        Button plant = this.findViewById(R.id.btnPlant);
-
-        plant.setOnClickListener(new View.OnClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                //Intent intent = new Intent(v.getContext(), plantInfoPage.class);
-                //startActivity(intent);
-                searchingFor = b.getString("message");
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Intent intent = new Intent(view.getContext(), plantInfoPage.class);
                 link = link + "&common_name=" + searchingFor;
                 try {
                     url = new URL(link);
@@ -66,47 +75,42 @@ public class plantSearchPage extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
                 try {
                     br = new BufferedReader(new InputStreamReader(url.openStream()));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 StringBuilder sb = new StringBuilder();
-                while(true)
-                {
+                while (true) {
                     try {
-                        if (((output = br.readLine()) != null))
-                        {
+                        if (((output = br.readLine()) != null)) {
                             sb.append(output + "\n");
-                        }
-                        else
-                        {
+                        } else {
                             break;
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
                 }
                 try {
                     br.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
                 result = sb.toString();
                 try {
                     plantResult = new JSONObject(result);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
                 TextView textView = findViewById(R.id.textView2);
                 textView.setText(plantResult.toString());
-
             }
         });
+
+        resultsList.add(searchingFor);
+        resultsIDList.add(searchingFor);
+        listView.setAdapter(arrayAdapter);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
