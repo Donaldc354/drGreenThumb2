@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.drgreenthumb">
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,66 +12,94 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".loginPage"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme.NoActionBar">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".supplies"></activity>
+        <activity
+            android:name=".loginPage"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".homePage"/>
-        <activity android:name=".newsletters"
+        <activity android:name=".homePage" />
+        <activity
+            android:name=".newsletters"
             android:parentActivityName=".utilitiesPage">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.drgreenthumb.utilitiesPage"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.drgreenthumb.utilitiesPage" />
         </activity>
-        <activity android:name=".personalization"
+        <activity
+            android:name=".personalization"
             android:parentActivityName=".utilitiesPage">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.drgreenthumb.utilitiesPage"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.drgreenthumb.utilitiesPage" />
         </activity>
-        <activity android:name=".interests"
+        <activity
+            android:name=".interests"
             android:parentActivityName=".utilitiesPage">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.drgreenthumb.utilitiesPage"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.drgreenthumb.utilitiesPage" />
         </activity>
-        <activity android:name=".editAccountInfo"
+        <activity
+            android:name=".editAccountInfo"
             android:parentActivityName=".settingsPage">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.drgreenthumb.settingsPage"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.drgreenthumb.settingsPage" />
         </activity>
-        <activity android:name=".appColor"
+        <activity
+            android:name=".appColor"
             android:parentActivityName=".settingsPage">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.drgreenthumb.settingsPage"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.drgreenthumb.settingsPage" />
         </activity>
-        <activity android:name=".wateringSchedule"
+        <activity
+            android:name=".wateringSchedule"
             android:parentActivityName=".utilitiesPage">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.drgreenthumb.utilitiesPage"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.drgreenthumb.utilitiesPage" />
         </activity>
-        <activity android:name=".settingsPage"
+        <activity
+            android:name=".settingsPage"
             android:parentActivityName=".homePage">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.drgreenthumb.homePage"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.drgreenthumb.homePage" />
         </activity>
-        <activity android:name=".plantInfoPage"
+        <activity
+            android:name=".plantInfoPage"
             android:parentActivityName=".homePage">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.drgreenthumb.homePage"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.drgreenthumb.homePage" />
         </activity>
-        <activity android:name=".utilitiesPage"
+        <activity
+            android:name=".utilitiesPage"
             android:parentActivityName=".homePage">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.drgreenthumb.homePage"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.drgreenthumb.homePage" />
         </activity>
-        <activity android:name=".plantSearchPage"
+        <activity
+            android:name=".plantSearchPage"
             android:parentActivityName=".homePage">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.drgreenthumb.homePage"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.drgreenthumb.homePage" />
         </activity>
+
+        <receiver android:name=".AlarmReceiver">
+            <intent-filter>
+                <action android:name="com.example.drgreenthumb.alarms" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

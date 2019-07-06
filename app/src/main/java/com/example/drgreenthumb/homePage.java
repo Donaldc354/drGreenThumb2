@@ -1,16 +1,19 @@
 package com.example.drgreenthumb;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TextInputEditText;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 public class homePage extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +59,7 @@ public class homePage extends AppCompatActivity {
         findSupplies.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                search(v).show();
             }
         });
 
@@ -76,4 +79,26 @@ public class homePage extends AppCompatActivity {
             }
         });
     }
+
+    protected Dialog search(final View v){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final EditText input = new EditText(this);
+        input.setHint("Search");
+        builder.setView(input)
+                .setTitle("Search for Supplies")
+                .setPositiveButton("Search", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(input.getText().toString() != null){
+                            Intent intent = new Intent(v.getContext(), supplies.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("SEARCH", input.getText().toString());
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        }
+                    }
+                });
+        return builder.create();
+    }
+
 }
