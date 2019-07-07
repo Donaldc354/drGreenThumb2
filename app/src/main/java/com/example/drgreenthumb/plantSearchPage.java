@@ -26,12 +26,14 @@ public class plantSearchPage extends AppCompatActivity {
 
     String searchingFor;
     String link = "https://trefle.io/api/species/?token=eUJ6SnZ6TUh3bjhCcnlhMkNPSDMzdz09";
+    String token = "?token=eUJ6SnZ6TUh3bjhCcnlhMkNPSDMzdz09";
     String result;
     JSONArray plantResult;
     URL url;
     String output;
     BufferedReader br;
     HttpsURLConnection connection = null;
+    String plantUrl;
 
 
 
@@ -58,6 +60,7 @@ public class plantSearchPage extends AppCompatActivity {
                 searchingFor = txt.getText().toString();
                 link = link + "&common_name=" + searchingFor;
                 new TrefleApiConnect().execute(link);
+                plantUrl = plantUrl + token;
                 Intent intent = new Intent(v.getContext(), plantInfoPage.class);
                 Bundle a = new Bundle();
                 intent.putExtras(a);
@@ -95,14 +98,9 @@ public class plantSearchPage extends AppCompatActivity {
 
                 JSONObject obj = plantResult.getJSONObject(0);
                 String name = obj.getString("common_name");
-                String tempurl = obj.getString("link");
-                String tempString = "name: " + name + ", link: " + tempurl;
+                plantUrl = obj.getString("link");
 
-
-
-                TextView textView = findViewById(R.id.textView3);
-                textView.setText(tempString);
-
+                //String tempString = "name: " + name + ", link: " + tempurl;
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
