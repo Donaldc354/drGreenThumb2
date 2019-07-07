@@ -2,6 +2,7 @@ package com.example.drgreenthumb;
 
 public class plant {
     public String plantName;
+
     public int speciesID;
     public String plantType;
    // public String synonym;
