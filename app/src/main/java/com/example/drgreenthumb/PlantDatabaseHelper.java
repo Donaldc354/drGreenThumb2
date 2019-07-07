@@ -136,7 +136,7 @@ public class PlantDatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public plant getFavorite(String plantname){
+    /*public plant getFavorite(String plantname){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE2_NAME + " WHERE plantName = ?", new String[] {plantname});
         plant p1 = new plant(cursor.getString(0), cursor.getInt(1),cursor.getString(2), cursor.getString(3),cursor.getString(4),cursor.getFloat(5), cursor.getString(6), cursor.getString(7),cursor.getFloat(8),cursor.getString(9),cursor.getString(10), cursor.getString(11), cursor.getFloat(12),cursor.getFloat(13),cursor.getFloat(14),cursor.getFloat(15), cursor.getFloat(16));
@@ -152,6 +152,6 @@ public class PlantDatabaseHelper extends SQLiteOpenHelper {
             plantList.add(p1);
         }
         return plantList;
-    }
+    }*/
 
 }
