@@ -1,38 +1,41 @@
 package com.example.drgreenthumb;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
+import javax.net.ssl.HttpsURLConnection;
 
 public class plantSearchPage extends AppCompatActivity {
 
     String searchingFor;
-    String link = "http://trefle.io/api/species/?token=eUJ6SnZ6TUh3bjhCcnlhMkNPSDMzdz09";
+    String link = "https://trefle.io/api/species/?token=eUJ6SnZ6TUh3bjhCcnlhMkNPSDMzdz09";
+    String token = "?token=eUJ6SnZ6TUh3bjhCcnlhMkNPSDMzdz09";
     String result;
-    JSONObject plantResult;
+    JSONArray plantResult;
     URL url;
     String output;
     BufferedReader br;
-    HttpURLConnection connection = null;
+    HttpsURLConnection connection = null;
+    String plantUrl;
 
     private ListView listView;
     private ArrayAdapter arrayAdapter;
@@ -62,56 +65,57 @@ public class plantSearchPage extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Intent intent = new Intent(view.getContext(), plantInfoPage.class);
                 link = link + "&common_name=" + searchingFor;
-                try {
-                    url = new URL(link);
-                    connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("GET");
-                    connection.setReadTimeout(10000);
-                    connection.setConnectTimeout(15000);
-                    connection.setDoOutput(true);
-                    connection.connect();
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    br = new BufferedReader(new InputStreamReader(url.openStream()));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                StringBuilder sb = new StringBuilder();
-                while (true) {
-                    try {
-                        if (((output = br.readLine()) != null)) {
-                            sb.append(output + "\n");
-                        } else {
-                            break;
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                result = sb.toString();
-                try {
-                    plantResult = new JSONObject(result);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                TextView textView = findViewById(R.id.textView2);
-                textView.setText(plantResult.toString());
+                new TrefleApiConnect().execute(link);
+                plantUrl = plantUrl + token;
+                Intent intent = new Intent(view.getContext(), plantInfoPage.class);
+                Bundle a = new Bundle();
+                intent.putExtras(a);
+                startActivity(intent);
+
             }
         });
 
-        resultsList.add(searchingFor);
-        resultsIDList.add(searchingFor);
-        listView.setAdapter(arrayAdapter);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private class TrefleApiConnect extends AsyncTask<String, Void, String>
+    {
+        @Override
+        protected String doInBackground(String... params)
+        {
+            String temp = params[0];
+            try {
+                url = new URL(temp);
+                connection = (HttpsURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+                connection.setReadTimeout(10000);
+                connection.setConnectTimeout(15000);
+                connection.setDoOutput(true);
+                connection.connect();
+                br = new BufferedReader(new InputStreamReader(url.openStream()));
+                StringBuilder sb = new StringBuilder();
+                while ((output = br.readLine()) != null)
+                {
+                    sb.append(output + "\n");
+                }
+                br.close();
+                result = sb.toString();
+                plantResult = new JSONArray(result);
+
+                JSONObject obj = plantResult.getJSONObject(0);
+                String name = obj.getString("common_name");
+                plantUrl = obj.getString("link");
+
+                //String tempString = "name: " + name + ", link: " + tempurl;
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 }
