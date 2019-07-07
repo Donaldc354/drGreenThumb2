@@ -30,7 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class loginPage extends AppCompatActivity {
-    DatabaseHelper myDB;
+    PlantDatabaseHelper myDB;
     private FirebaseAuth mAuth;
     private EditText newPassword;
     private EditText newEmail;
@@ -42,7 +42,7 @@ public class loginPage extends AppCompatActivity {
         setContentView(R.layout.activity_login_page2);
 
         //Create Database helper instance
-        myDB = new DatabaseHelper(this);
+        myDB = new PlantDatabaseHelper(this);
         newEmail = findViewById(R.id.txtEmail);
         newPassword = findViewById(R.id.txtPassword);
         //loginButton = findViewById(R.id.btnLogin);
@@ -51,47 +51,37 @@ public class loginPage extends AppCompatActivity {
     }
 
     //Working on this one
-
     public void registerUser(View v) {
         String userEmail = newEmail.getText().toString().trim();
         String userPassword = newPassword.getText().toString().trim();
-        if (TextUtils.isEmpty(userEmail)) {
-            Toast.makeText(this, "A Field is Empty", Toast.LENGTH_SHORT).show();
-            return;
+        if(newEmail.getText().toString() == "" || newPassword.getText().toString() == ""){
+            Toast.makeText(getApplicationContext(),"One or more fields are empty please check your input.", Toast.LENGTH_LONG);
         }
-        if (TextUtils.isEmpty(userPassword)) {
-            Toast.makeText(this, "A Field is Empty", Toast.LENGTH_SHORT).show();
-            return;
+        else {
+            Boolean checkEmail = myDB.checkEmail(userEmail);
+            Boolean checkPassword = myDB.checkPassword(userEmail,userPassword);
+            if(checkEmail == true && checkPassword == true){
+                Boolean insert = myDB.insertUserData(userEmail, userPassword);
+                if(insert == true){
+                    Toast.makeText(getApplicationContext(), "Registered Successfully", Toast.LENGTH_LONG).show();
+                }
+            }
+            else
+                Toast.makeText(getApplicationContext(), "Email Already exists!", Toast.LENGTH_LONG).show();
         }
-        mAuth.createUserWithEmailAndPassword(userEmail, userPassword)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        try {
-                            //check if successful
-                            if (task.isSuccessful()) {
-                                //User is successfully registered and logged in
-                                //start Profile Activity here
-                                Toast.makeText(loginPage.this, "registration successful",
-                                        Toast.LENGTH_SHORT).show();
-                                finish();
-                                startActivity(new Intent(getApplicationContext(), homePage.class));
-                            } else {
-                                Toast.makeText(loginPage.this, "Couldn't register, try again",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-
     }
 
 
     //Needs verification
     public void LoginAction(View v){
-        boolean isInserted = myDB.insertData(newEmail.getText().toString(), newPassword.getText().toString());
+    /*
+        if(newEmail.getText().toString() == "" || newPassword.getText().toString() == ""){
+            Toast.makeText(getApplicationContext(),"One or more fields are empty please check your input.", Toast.LENGTH_LONG);
+        }
+        else{
+            if
+        }*/
+        boolean isInserted = myDB.insertUserData(newEmail.getText().toString(), newPassword.getText().toString());
         if  (isInserted  == true){
             Toast.makeText(loginPage.this, "User Logged In", Toast.LENGTH_LONG).show();
             User newUser = new User(newEmail.getText().toString(), newPassword.getText().toString() );

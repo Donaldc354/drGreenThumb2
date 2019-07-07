@@ -1,6 +1,11 @@
 package com.example.drgreenthumb;
 
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import static com.example.drgreenthumb.PlantDatabaseHelper.TABLE_NAME;
+
 public class User {
     private String userPassword;
     private String userEmail;
@@ -16,7 +21,11 @@ public class User {
         userPassword = newPass;
         userEmail = newEmail;
     }
-
+    public User(User u){
+        userPassword = u.getUserPassword();
+        userEmail =u.getUserEmail();
+        userID = u.getUserID();
+    }
     public String getUserEmail(){
         return userEmail;
     }
@@ -25,5 +34,15 @@ public class User {
     }
     public int getUserID(){
         return userID;
+    }
+
+    public boolean checkUserSignIn(String pWord, String uEmail){
+        //SQLiteDatabase db = this.getReadableDatabase();
+        //Cursor res = db.rawQuery("SELECT * FROM " +  TABLE_NAME + " WHERE userEmail=" + uEmail +"", null);
+
+        //User user = new User(uEmail);
+
+        return true;
+
     }
 }
