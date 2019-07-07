@@ -17,8 +17,6 @@ public class appColor extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_color);
 
-
-
         Button white = findViewById(R.id.btnWhite);
         Button red = findViewById(R.id.btnRed);
         Button orange = findViewById(R.id.btnOrange);
@@ -30,6 +28,7 @@ public class appColor extends AppCompatActivity {
         Button save = findViewById(R.id.btnSave);
 
         final ConstraintLayout constraintLayout = findViewById(R.id.constLayout);
+        constraintLayout.setBackgroundColor(appColor.setAppColor());
 
         white.setOnClickListener(new View.OnClickListener() {
             @Override

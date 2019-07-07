@@ -13,8 +13,8 @@ public class utilitiesPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_utilities_page);
-        final ConstraintLayout temp = findViewById(R.id.utilityLayout);
 
+        final ConstraintLayout temp = findViewById(R.id.utilityLayout);
         temp.setBackgroundColor(appColor.setAppColor());
 
         Button wateringSchedule = findViewById(R.id.btnWateringSchedule);
