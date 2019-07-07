@@ -5,53 +5,31 @@ public class plant {
 
     public int speciesID;
     public String plantType;
-   // public String synonym;
     public String toxicity;
-    //public float maxHeightAtBaseAge_ft;
-   // public float maxHeightAtBaseAge_cm;
     public float matureHeight_ft;
-    //public float matureHeight_cm;
     public String lifeSpan;
-    //public String growthRate;
-    //public String growthPeriod;
-    //public String growthHabit;
-    //public String growthForm;
-   // public String soilsAdaptationMedium;
-    //public String soilsAdaptationFine;
-    //public String soilsAdaptationCoarse;
-    //public String vegetativeSpreadRate;
-    //public String seedSpreadRate;
-    //public String commercialAvailability;
     public String bloomPeriod;
     public float tempMin_f;
     public String shadeTolerance;
     public String salinityTolerance;
     public String droughtTolerance;
-   // public float rootDepthMin_in;
-   // public float rootDepthMin_cm;
-    //public String resproutAbility;
     public float precipitationMin_in;
-    //public float precipitationMin_cm;
     public float precipitationMax_in;
-    //public float precipitationMax_cm;
     public float pHmin;
     public float pHmax;
-   // public String seedPeriodEnd;
-   // public String seedPeriodBegin;
 
-    public plant(String plantName, int speciesID, String plantType, String synonym, String toxicity,
+
+    public plant(String plantName, int speciesID, String plantType, String toxicity,
              float matureHeight_ft, String lifeSpan, String bloomPeriod,
-             float tempMin_f, String shadeTolerance, String salinityTolerance, String droughtTolerance, float precipitationMin_in, float precipitationMin_cm, float precipitationMax_in,
+             float tempMin_f, String shadeTolerance, String salinityTolerance, String droughtTolerance, float precipitationMin_in, float precipitationMax_in,
              float pHmin, float pHmax)
     {
         this.plantName = plantName;
         this.speciesID = speciesID;
         this.plantType = plantType;
-        //this.synonym = synonym;
         this.toxicity = toxicity;
         this.matureHeight_ft = matureHeight_ft;
         this.lifeSpan = lifeSpan;
-        //this.growthRate = growthRate;
         this.bloomPeriod = bloomPeriod;
         this.tempMin_f = tempMin_f;
         this.shadeTolerance = shadeTolerance;
@@ -83,6 +61,9 @@ public class plant {
     public String getBloomPeriod(){
         return bloomPeriod;
     }
+    public String getShadeTolerance() { return shadeTolerance; }
+    public String getSalinityTolerance() {return salinityTolerance;}
+    public String getDroughtTolerance() { return droughtTolerance;}
     public float getTempMin(){
         return tempMin_f;
     }

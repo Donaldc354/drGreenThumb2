@@ -29,6 +29,7 @@ public class plantSearchPage extends AppCompatActivity {
     String token = "?token=eUJ6SnZ6TUh3bjhCcnlhMkNPSDMzdz09";
     String result;
     JSONArray plantResult;
+    JSONObject plantObject;
     URL url;
     String output;
     BufferedReader br;
@@ -61,6 +62,7 @@ public class plantSearchPage extends AppCompatActivity {
                 link = link + "&common_name=" + searchingFor;
                 new TrefleApiConnect().execute(link);
                 plantUrl = plantUrl + token;
+                new TrefleApiConnect().execute(plantUrl);
                 Intent intent = new Intent(v.getContext(), plantInfoPage.class);
                 Bundle a = new Bundle();
                 intent.putExtras(a);
@@ -97,7 +99,8 @@ public class plantSearchPage extends AppCompatActivity {
                 plantResult = new JSONArray(result);
 
                 JSONObject obj = plantResult.getJSONObject(0);
-                String name = obj.getString("common_name");
+                plantObject = obj;
+                //String name = obj.getString("common_name");
                 plantUrl = obj.getString("link");
 
                 //String tempString = "name: " + name + ", link: " + tempurl;
