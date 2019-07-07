@@ -62,7 +62,7 @@
         android:layout_marginTop="592dp"
         android:layout_marginBottom="89dp"
         android:background="#000"
-        android:onClick="loginUser"
+        android:onClick="LoginAction"
         android:text="Login"
         android:textColor="#fff"
         app:layout_constraintBottom_toBottomOf="parent"

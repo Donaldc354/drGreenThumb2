@@ -21,6 +21,7 @@ public class settingsPage extends AppCompatActivity {
 
         Button color = findViewById(R.id.btnColor);
 
+
         color.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
