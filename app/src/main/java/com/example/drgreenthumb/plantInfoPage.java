@@ -50,6 +50,15 @@ public class plantInfoPage extends AppCompatActivity {
             imageArray = new JSONArray(plantImageString);
             imageObject = imageArray.getJSONObject(0);
             plantImageUrl = imageObject.getString("url");
+            /*TextView textView = findViewById(R.id.txtPlantInfo2);
+            String displayString = "Plant Name: " + resultPlant.getPlantName() + "\nPlant Type: " + resultPlant.getPlantType() + "\nToxicity: "
+                    + resultPlant.isPlantToxic() + "\nMature Height (ft): " + resultPlant.getPlantHeight() + "\nLife Span: " + resultPlant.getPlantLifeSpan()
+                    + "\nBloom Period: " + resultPlant.getBloomPeriod() + "\nMinimum Temperature (Fahrenheit): " + resultPlant.getTempMin()
+                    + "\nShade Tolerance: " + resultPlant.getShadeTolerance() + "\nSalinityTolerance: " + resultPlant.getSalinityTolerance()
+                    + "\nDroughtTolerance: " + resultPlant.getDroughtTolerance() + "\nMinimum Precipitation (in): " + resultPlant.getPrecipitationMin_in()
+                    + "\nMaximum Precipitation (in): " + resultPlant.getPrecipitationMax_in() + "\npH Minimum: " + resultPlant.getpHmin()
+                    + "\npH Max: " + resultPlant.getpHmax();
+            textView.setText(displayString);*/
             ImageView image = findViewById(R.id.imgPlant2);
             new DownloadImageTask(image).execute(plantImageUrl);
 
@@ -107,6 +116,7 @@ public class plantInfoPage extends AppCompatActivity {
 
 
         plant t;
+
         try {
             t = new plant(p.getString("common_name"),
                     Integer.parseInt(p.getString("id")),
@@ -123,7 +133,7 @@ public class plantInfoPage extends AppCompatActivity {
                     Float.parseFloat(precipitationMaxObject.getString("inches")),
                     Float.parseFloat(growthObject.getString("ph_minimum")),
                     Float.parseFloat(growthObject.getString("ph_maximum")));
-
+            resultPlant = t;
             PlantDatabaseHelper myDB = new PlantDatabaseHelper(this);
             myDB.insertPlant(t);
         }
