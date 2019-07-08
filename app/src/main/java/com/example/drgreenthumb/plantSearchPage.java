@@ -1,19 +1,16 @@
 package com.example.drgreenthumb;
 
 import android.app.Activity;
-import android.content.Context;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Parcelable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.Button;
+import android.widget.EditText;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,11 +19,9 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import java.util.ArrayList;
 import javax.net.ssl.HttpsURLConnection;
 
 public class plantSearchPage extends AppCompatActivity {
@@ -40,7 +35,9 @@ public class plantSearchPage extends AppCompatActivity {
     JSONArray plantResult;
     JSONObject plantObject;
     Intent intent;
+    JSONObject globalPlant;
 
+    StringBuilder sb;
     URL url;
     URL actualPlantUrl;
     String output;
@@ -48,10 +45,7 @@ public class plantSearchPage extends AppCompatActivity {
     HttpsURLConnection connection = null;
     String plantUrl = "https://trefle.io/api/plants/";;
 
-    private ListView listView;
-    private ArrayAdapter arrayAdapter;
-    private ArrayList<String> resultsList = new ArrayList<>();
-    private ArrayList<String> resultsIDList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,22 +55,18 @@ public class plantSearchPage extends AppCompatActivity {
         final ConstraintLayout temp = findViewById(R.id.plantSearchPageLayout);
         temp.setBackgroundColor(appColor.setAppColor());
 
-        final Bundle b = getIntent().getExtras();
+        //final Bundle b = getIntent().getExtras();
 
-        searchingFor = b.getString("SEARCH_FOR");
-        TextView textView = findViewById(R.id.txtSearchingFor);
-        textView.setText("Searching For: '" + searchingFor + "'");
+        final Button plant = this.findViewById(R.id.btnPlant);
+        final EditText txt = this.findViewById(R.id.textView2);
 
-        listView = findViewById(R.id.searchResults);
-
-        arrayAdapter = new ArrayAdapter(this, R.layout.mylistview, resultsList);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        plant.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
                 //;
                 //startActivity(intent);
                 //searchingFor = b.getString("message");
+                searchingFor = txt.getText().toString();
                 plantIDlink = plantIDlink + "&common_name=" + searchingFor;
                 new TrefleApiConnect(plantSearchPage.this).execute(plantIDlink);
                 //intent = new Intent(plantSearchPage.this, plantInfoPage.class);
@@ -89,20 +79,29 @@ public class plantSearchPage extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private class TrefleApiConnect extends AsyncTask<String, Void, JSONObject>
+    private class TrefleApiConnect extends AsyncTask<String, Void, Wrapper>
     {
         private Activity activity;
+        AlertDialog alertDialog;
+        Wrapper w;
 
         public TrefleApiConnect(Activity activity)
         {
             this.activity = activity;
         }
 
+
+        protected void onPreExecute() {
+            super.onPreExecute();
+            alertDialog = new AlertDialog.Builder(plantSearchPage.this).create();
+        }
+
         @Override
-        protected JSONObject doInBackground(String... params)
+        protected Wrapper doInBackground(String... params)
         {
             String temp = params[0];
             JSONObject actualPlantObject = null;
+
             try {
                 //first api call
                 url = new URL(temp);
@@ -113,41 +112,50 @@ public class plantSearchPage extends AppCompatActivity {
                 connection.setDoOutput(true);
                 connection.connect();
                 br = new BufferedReader(new InputStreamReader(url.openStream()));
-                StringBuilder sb = new StringBuilder();
+                sb = new StringBuilder();
                 while ((output = br.readLine()) != null)
                 {
                     sb.append(output + "\n");
                 }
                 br.close();
-                result = sb.toString();
-                plantResult = new JSONArray(result);
-                JSONObject obj = plantResult.getJSONObject(0);
-                plantObject = obj;
-                //String name = obj.getString("common_name");
-                //plantUrl = obj.getString("link");
-                plantID = obj.getString("id");
-                plantUrl = plantUrl + plantID + token;
-                connection.disconnect();
 
-                //second api call
-                actualPlantUrl = new URL(plantUrl);
-                connection = (HttpsURLConnection) actualPlantUrl.openConnection();
-                connection.setRequestMethod("GET");
-                connection.setReadTimeout(10000);
-                connection.setConnectTimeout(15000);
-                connection.setDoOutput(true);
-                connection.connect();
-                br = new BufferedReader(new InputStreamReader(actualPlantUrl.openStream()));
-                StringBuilder sd = new StringBuilder();
-                while ((output = br.readLine()) != null)
+                result = sb.toString();
+                JSONObject obj = new JSONObject();
+                if (!result.equalsIgnoreCase("[]\n"))
                 {
-                    sd.append(output + "\n");
+                    plantResult = new JSONArray(result);
+                    obj = plantResult.getJSONObject(0);
+                    plantObject = obj;
+                    //String name = obj.getString("common_name");
+                    //plantUrl = obj.getString("link");
+                    plantID = obj.getString("id");
+                    plantUrl = plantUrl + plantID + token;
+                    connection.disconnect();
+
+                    //second api call
+                    actualPlantUrl = new URL(plantUrl);
+                    connection = (HttpsURLConnection) actualPlantUrl.openConnection();
+                    connection.setRequestMethod("GET");
+                    connection.setReadTimeout(10000);
+                    connection.setConnectTimeout(15000);
+                    connection.setDoOutput(true);
+                    connection.connect();
+                    br = new BufferedReader(new InputStreamReader(actualPlantUrl.openStream()));
+                    StringBuilder sd = new StringBuilder();
+                    while ((output = br.readLine()) != null)
+                    {
+                        sd.append(output + "\n");
+                    }
+                    br.close();
+                    actualResult = sd.toString();
+                    globalPlant = new JSONObject(actualResult);
+                    //JSONObject obj2 = actualPlantObject.getJSONObject("main_species");
+                    connection.disconnect();
+                    w = new Wrapper(globalPlant, 1);
+                    return w;
+
                 }
-                br.close();
-                actualResult = sd.toString();
-                actualPlantObject = new JSONObject(actualResult);
-                //JSONObject obj2 = actualPlantObject.getJSONObject("main_species");
-                connection.disconnect();
+                w = new Wrapper(null, 0);
 
                 //String tempString = "name: " + name + ", link: " + tempurl;
 
@@ -158,17 +166,54 @@ public class plantSearchPage extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            return actualPlantObject;
+
+            return w;
         }
 
         @Override
-        protected void onPostExecute(JSONObject jsonObject)
+        protected void onPostExecute(Wrapper r)
         {
-            super.onPostExecute(jsonObject);
-            JSONObject t = jsonObject;
-            activity.startActivity(new Intent(activity, plantInfoPage.class).putExtra("actualPlantObject", t.toString()));
+            super.onPostExecute(r);
+
+            switch(r.result)
+            {
+                case 1 :
+                    JSONObject t = r.object;
+                    activity.startActivity(new Intent(activity, plantInfoPage.class).putExtra("actualPlantObject", t.toString()));
+                case 0:
+                    alertDialog.setTitle("Plant Not Found");
+                    alertDialog.setCanceledOnTouchOutside(false);
+                    alertDialog.setMessage("There are no plants that match this name. Please try again");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent A = new Intent(plantSearchPage.this, plantSearchPage.class);
+                                    connection.disconnect();
+                                    sb = new StringBuilder();
+                                    result = null;
+                                    url = null;
+                                    startActivity(A);
+                                    finish();
+                                }
+                            });
+                    alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            Intent A = new Intent(plantSearchPage.this, plantSearchPage.class);
+                            connection.disconnect();
+                            sb = new StringBuilder();
+                            result = null;
+                            url = null;
+                            startActivity(A);
+                            finish();
+                        }
+                    });
+                    alertDialog.show();
+            }
 
         }
     }
+
+
 }
 

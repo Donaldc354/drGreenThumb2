@@ -22,6 +22,11 @@ public class PlantDatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public PlantDatabaseHelper(plantInfoPage context)
+    {
+        super(context, DATABASE_NAME, null, 1);
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + TABLE_NAME + " (userID INTEGER PRIMARY KEY AUTOINCREMENT, userEmail TEXT, userPassword TEXT )");
