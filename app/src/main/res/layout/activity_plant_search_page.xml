@@ -18,8 +18,9 @@
         android:layout_marginRight="82dp"
         android:layout_marginBottom="568dp"
         android:gravity="center"
-        android:text="Searching for: "
+
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:hint="Plant name (lowercase)"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
