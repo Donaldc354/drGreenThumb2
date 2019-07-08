@@ -18,6 +18,24 @@ public class plant {
     public float pHmin;
     public float pHmax;
 
+    public plant(plant plant){
+        this.plantName = plant.plantName;
+        this.speciesID = plant.speciesID;
+        this.plantType = plant.plantType;
+        this.toxicity = plant.toxicity;
+        this.matureHeight_ft = plant.matureHeight_ft;
+        this.lifeSpan = plant.lifeSpan;
+        this.bloomPeriod = plant.bloomPeriod;
+        this.tempMin_f = plant.tempMin_f;
+        this.shadeTolerance = plant.shadeTolerance;
+        this.salinityTolerance = plant.salinityTolerance;
+        this.droughtTolerance = plant.droughtTolerance;
+        this.precipitationMin_in = plant.precipitationMin_in;
+        this.precipitationMax_in = plant.precipitationMax_in;
+        this.pHmax = plant.pHmax;
+        this.pHmin = plant.pHmin;
+    }
+
     public plant(String plantName, int speciesID, String plantType, String toxicity,
              float matureHeight_ft, String lifeSpan, String bloomPeriod,
              float tempMin_f, String shadeTolerance, String salinityTolerance, String droughtTolerance, float precipitationMin_in, float precipitationMax_in,

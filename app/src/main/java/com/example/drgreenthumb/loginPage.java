@@ -2,19 +2,12 @@ package com.example.drgreenthumb;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Environment;
-import android.support.annotation.NonNull;
-import android.support.v4.util.LruCache;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,11 +16,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class loginPage extends AppCompatActivity {
     PlantDatabaseHelper myDB;
@@ -35,6 +24,7 @@ public class loginPage extends AppCompatActivity {
     private EditText newPassword;
     private EditText newEmail;
     private FirebaseUser currentUser;
+    private Button loginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +35,20 @@ public class loginPage extends AppCompatActivity {
         myDB = new PlantDatabaseHelper(this);
         newEmail = findViewById(R.id.txtEmail);
         newPassword = findViewById(R.id.txtPassword);
-        //loginButton = findViewById(R.id.btnLogin);
+        loginButton = findViewById(R.id.btnLogin);
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginUser(v);
+            }
+        });
     }
 
     //Working on this one
-    public void registerUser(View v) {
+    /*public void registerUser(View v) {
         String userEmail = newEmail.getText().toString().trim();
         String userPassword = newPassword.getText().toString().trim();
         if(newEmail.getText().toString() == "" || newPassword.getText().toString() == ""){
@@ -74,13 +71,13 @@ public class loginPage extends AppCompatActivity {
 
     //Needs verification
     public void LoginAction(View v){
-    /*
+
         if(newEmail.getText().toString() == "" || newPassword.getText().toString() == ""){
             Toast.makeText(getApplicationContext(),"One or more fields are empty please check your input.", Toast.LENGTH_LONG);
         }
         else{
             if
-        }*/
+        }
         boolean isInserted = myDB.insertUserData(newEmail.getText().toString(), newPassword.getText().toString());
         if  (isInserted  == true){
             Toast.makeText(loginPage.this, "User Logged In", Toast.LENGTH_LONG).show();
@@ -94,7 +91,7 @@ public class loginPage extends AppCompatActivity {
         else {
             Toast.makeText(loginPage.this, "User Not Logged In", Toast.LENGTH_LONG).show();
         }
-    }
+    }*/
 
 
 
@@ -103,8 +100,8 @@ public class loginPage extends AppCompatActivity {
 
 
 
-    /*
-    Old login using firebase
+
+    //Old login using firebase
     public void loginUser(View v) {
         String userEmail = newEmail.getText().toString().trim();
         String userPassword = newPassword.getText().toString().trim();
@@ -137,18 +134,17 @@ public class loginPage extends AppCompatActivity {
                     }
                 });
     }
-    */
 
 
-    //User newUser = new User(email, password);
-        //Intent intent = new Intent(this, homePage.class);
-       // intent.putExtra("User", newUser);
-        //startActivity(intent);
+    /*User newUser = new User(email, password);
+        Intent intent = new Intent(this, homePage.class);
+        intent.putExtra("User", newUser);
+        startActivity(intent);
 
-        //Possibly
-        //Intent i = getIntent();
-        //Deneme dene = (Deneme)i.getSerializableExtra("sampleObject");
-   // }
+        Possibly
+        Intent i = getIntent();
+        Deneme dene = (Deneme)i.getSerializableExtra("sampleObject");
+   }*/
 }
 
 

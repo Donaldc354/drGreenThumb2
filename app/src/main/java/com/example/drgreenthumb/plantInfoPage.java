@@ -5,12 +5,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,7 +19,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -42,6 +40,8 @@ public class plantInfoPage extends AppCompatActivity {
 
         final ConstraintLayout temp = findViewById(R.id.plantInfoPageLayout);
         temp.setBackgroundColor(appColor.setAppColor());
+
+        plant newPlant;
 
         try {
             plantObject = new JSONObject(getIntent().getStringExtra("actualPlantObject"));
@@ -68,7 +68,7 @@ public class plantInfoPage extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        TextView txtView = (TextView) findViewById(R.id.txtPlantName2);
+        TextView txtView = findViewById(R.id.txtPlantName2);
         txtView.setText(plantName);
 
         final ImageView favoriteHeart = findViewById(R.id.favoriteHeart);
@@ -154,7 +154,8 @@ public class plantInfoPage extends AppCompatActivity {
                     Float.parseFloat(precipitationMaxObject.getString("inches")),
                     Float.parseFloat(growthObject.getString("ph_minimum")),
                     Float.parseFloat(growthObject.getString("ph_maximum")));
-            resultPlant = t;
+            System.out.println(t.getPlantName());
+            resultPlant = new plant(t);
             PlantDatabaseHelper myDB = new PlantDatabaseHelper(this);
             myDB.insertPlant(t);
         }
@@ -173,7 +174,7 @@ public class plantInfoPage extends AppCompatActivity {
             String urldisplay = urls[0];
             Bitmap bmp = null;
             try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
+                InputStream in = new URL(urldisplay).openStream();
                 bmp = BitmapFactory.decodeStream(in);
             } catch (Exception e) {
                 Log.e("Error", e.getMessage());

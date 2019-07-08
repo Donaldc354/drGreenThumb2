@@ -1,11 +1,6 @@
 package com.example.drgreenthumb;
 
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-
-import static com.example.drgreenthumb.PlantDatabaseHelper.TABLE_NAME;
-
 public class User {
     private String userPassword;
     private String userEmail;

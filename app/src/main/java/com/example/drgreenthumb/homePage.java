@@ -4,13 +4,12 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.Image;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -116,7 +115,7 @@ public class homePage extends AppCompatActivity {
         favoritesList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), favoritesList.class);
+                Intent intent = new Intent(v.getContext(), com.example.drgreenthumb.favoritesList.class);
                 startActivity(intent);
             }
         });
@@ -251,40 +250,41 @@ public class homePage extends AppCompatActivity {
         {
             super.onPostExecute(r);
 
-            switch(r.result)
-            {
-                case 1 :
-                    JSONObject t = r.object;
-                    activity.startActivity(new Intent(activity, plantInfoPage.class).putExtra("actualPlantObject", t.toString()));
-                case 0:
-                    alertDialog.setTitle("Plant Not Found");
-                    alertDialog.setCanceledOnTouchOutside(false);
-                    alertDialog.setMessage("There are no plants that match this name. Please try again");
-                    alertDialog.setButton(android.app.AlertDialog.BUTTON_NEUTRAL, "OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    //Intent A = new Intent(homePage.this, homePage.class);
-                                    connection.disconnect();
-                                    sb = new StringBuilder();
-                                    result = null;
-                                    url = null;
-                                    //startActivity(A);
-                                    //finish();
-                                }
-                            });
-                    alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialog) {
-                            //Intent A = new Intent(homePage.this, homePage.class);
-                            connection.disconnect();
-                            sb = new StringBuilder();
-                            result = null;
-                            url = null;
-                            //startActivity(A);
-                            //finish();
-                        }
-                    });
-                    alertDialog.show();
+            if(r != null) {
+                switch (r.result) {
+                    case 1:
+                        JSONObject t = r.object;
+                        activity.startActivity(new Intent(activity, plantInfoPage.class).putExtra("actualPlantObject", t.toString()));
+                    case 0:
+                        alertDialog.setTitle("Plant Not Found");
+                        alertDialog.setCanceledOnTouchOutside(false);
+                        alertDialog.setMessage("There are no plants that match this name. Please try again");
+                        alertDialog.setButton(android.app.AlertDialog.BUTTON_NEUTRAL, "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        //Intent A = new Intent(homePage.this, homePage.class);
+                                        connection.disconnect();
+                                        sb = new StringBuilder();
+                                        result = null;
+                                        url = null;
+                                        //startActivity(A);
+                                        //finish();
+                                    }
+                                });
+                        alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialog) {
+                                //Intent A = new Intent(homePage.this, homePage.class);
+                                connection.disconnect();
+                                sb = new StringBuilder();
+                                result = null;
+                                url = null;
+                                //startActivity(A);
+                                //finish();
+                            }
+                        });
+                        alertDialog.show();
+                }
             }
 
         }
