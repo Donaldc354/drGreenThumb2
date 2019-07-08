@@ -2,8 +2,6 @@ package com.example.drgreenthumb;
 
 import android.app.AlarmManager;
 import android.app.Dialog;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -11,31 +9,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.os.Build;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.NumberPicker;
 import android.widget.TimePicker;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -56,11 +41,14 @@ public class wateringSchedule extends AppCompatActivity {
     private int pos;
 
     private ArrayAdapter arrayAdapter;
-    private ArrayList<String> arrayList = new ArrayList<>();
+    private ArrayList<String> arrayList;
+    private ArrayList<alarm> alarmList;
 
     private Context context = this;
     private AlarmManager alarmMgr;
     private PendingIntent alarmIntent;
+
+    PlantDatabaseHelper plantDatabaseHelper = new PlantDatabaseHelper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,9 +58,18 @@ public class wateringSchedule extends AppCompatActivity {
         final ConstraintLayout temp = findViewById(R.id.wateringLayout);
         temp.setBackgroundColor(appColor.setAppColor());
 
+        arrayList = new ArrayList<>();
+        alarmList = plantDatabaseHelper.getAlarms();
+
+        for(alarm a : alarmList){
+            arrayList.add(a.formatOutput());
+        }
+
         listView = findViewById(R.id.alarmListView);
 
         arrayAdapter = new ArrayAdapter(this, R.layout.mylistview, arrayList);
+
+        listView.setAdapter(arrayAdapter);
 
         addRemind = findViewById(R.id.btnAddReminder);
 
@@ -94,35 +91,30 @@ public class wateringSchedule extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private void createAlarm(Calendar c, String plantName, int index){
+    private void createAlarm(alarm alarm){
         Intent intent = new Intent(context, AlarmReceiver.class);
         Bundle bundle = new Bundle();
-        bundle.putString("PLANT_NAME", plantName);
-        bundle.putString("CHANNEL_NUM", Integer.toString(index));
+        bundle.putString("PLANT_NAME", alarm.getPlantName());
+        bundle.putInt("CHANNEL_NUM", alarm.getRequestCode());
         intent.putExtras(bundle);
         alarmMgr = (AlarmManager)context.getSystemService(ALARM_SERVICE);
-        alarmIntent = PendingIntent.getBroadcast(context, index, intent, 0);
-        switch(plantName){
+        alarmIntent = PendingIntent.getBroadcast(context, alarm.getRequestCode(), intent, 0);
+        switch(alarm.getPlantName()){
             case "Cactus/Succulent":
-                alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(),
-                        AlarmManager.INTERVAL_DAY * 7, alarmIntent);
-                //saveSetAlarm(7, index, plantName, c);
+                //alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, alarmIntent);
+                saveSetAlarm(7, alarm);
             case "Fern":
-                alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(),
-                        AlarmManager.INTERVAL_DAY * 4, alarmIntent);
-                //saveSetAlarm(4, index, plantName, c);
+                //alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 4, alarmIntent);
+                saveSetAlarm(4, alarm);
             case "Herb":
-                alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(),
-                        AlarmManager.INTERVAL_DAY * 3, alarmIntent);
-                //saveSetAlarm(3, index, plantName, c);
+                //alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 3, alarmIntent);
+                saveSetAlarm(3, alarm);
             case "Shrub":
-                alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(),
-                        AlarmManager.INTERVAL_DAY * 5, alarmIntent);
-                //saveSetAlarm(5, index, plantName, c);
+                //alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 5, alarmIntent);
+                saveSetAlarm(5, alarm);
             case"Perennial":
-                alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(),
-                        AlarmManager.INTERVAL_DAY * 2, alarmIntent);
-                //saveSetAlarm(2, index, plantName, c);
+                //alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 2, alarmIntent);
+                saveSetAlarm(2, alarm);
         }
     }
 
@@ -163,18 +155,24 @@ public class wateringSchedule extends AppCompatActivity {
         builder.setTitle("Options")
                 .setItems(R.array.alarm_options_array, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        switch(which){
-                            case 0:
-                                arrayList.remove(pos);
+                        if(which == 0){
+                            arrayList.remove(pos);
+                            plantDatabaseHelper.removeAlarm(pos);
+                            cancelAlarm(pos);
 
-                                listView.setAdapter(arrayAdapter);
-
-                                if(arrayList.size() < 5)
-                                    addRemind.setEnabled(true);
-                                else
-                                    addRemind.setEnabled(false);
-
-                                cancelAlarm(pos);
+                            alarmList = plantDatabaseHelper.getAlarms();
+                            for(alarm a : alarmList){
+                                if(a.getRequestCode() > pos){
+                                    cancelAlarm(a.getRequestCode());
+                                    a.setRequestCode(a.getRequestCode()-1);
+                                    createAlarm(a);
+                                }
+                            }
+                            listView.setAdapter(arrayAdapter);
+                            if(arrayList.size() < 5)
+                                addRemind.setEnabled(true);
+                            else
+                                addRemind.setEnabled(false);
                         }
                     }
                 });
@@ -198,7 +196,9 @@ public class wateringSchedule extends AppCompatActivity {
                         else
                             addRemind.setEnabled(false);
 
-                        createAlarm(c, plant, arrayList.size()-1);
+                        alarm newAlarm = new alarm(arrayList.size()-1, plant, c.get(Calendar.HOUR), c.get(Calendar.MINUTE));
+
+                        createAlarm(newAlarm);
                     }
                 });
         return builder.create();
@@ -242,18 +242,9 @@ public class wateringSchedule extends AppCompatActivity {
         }
     }*/
 
-    /*private void saveSetAlarm(int i, int index, String plantName, Calendar c){
-        try{
-            FileOutputStream fileOutput = context.openFileOutput("AlarmsFile", Context.MODE_APPEND);
-
-            writeDataToFileOutputStream(fileOutput, Integer.toString(index));
-            writeDataToFileOutputStream(fileOutput, plantName);
-            writeDataToFileOutputStream(fileOutput, c.getTime().toString());
-
-            alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(),
-                    AlarmManager.INTERVAL_DAY * i, alarmIntent);
-        } catch(FileNotFoundException e){
-            Log.e("TAG_WRITE_READ_FILE", e.getMessage(), e);
-        }
-    }*/
+    private void saveSetAlarm(int i, alarm alarm){
+        plantDatabaseHelper.insertAlarm(alarm.getRequestCode(), alarm.getPlantName(), alarm.getTime());
+        alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(),
+                AlarmManager.INTERVAL_DAY * i, alarmIntent);
+    }
 }

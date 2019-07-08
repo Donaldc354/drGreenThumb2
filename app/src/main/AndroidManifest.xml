@@ -51,13 +51,6 @@
                 android:value="com.example.drgreenthumb.utilitiesPage" />
         </activity>
         <activity
-            android:name=".interests"
-            android:parentActivityName=".utilitiesPage">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.drgreenthumb.utilitiesPage" />
-        </activity>
-        <activity
             android:name=".editAccountInfo"
             android:parentActivityName=".settingsPage">
             <meta-data
@@ -94,13 +87,6 @@
         </activity>
         <activity
             android:name=".utilitiesPage"
-            android:parentActivityName=".homePage">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.drgreenthumb.homePage" />
-        </activity>
-        <activity
-            android:name=".plantSearchPage"
             android:parentActivityName=".homePage">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

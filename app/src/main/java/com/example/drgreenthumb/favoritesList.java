@@ -25,9 +25,19 @@ public class favoritesList extends AppCompatActivity {
         listView = findViewById(R.id.favoritesList);
         arrayAdapter = new ArrayAdapter(this, R.layout.mylistview, favoritesList);
 
+        PlantDatabaseHelper plantDatabaseHelper = new PlantDatabaseHelper(this);
+        ArrayList<plant> plants = new ArrayList<>(plantDatabaseHelper.getFavorites());
+
+        for(plant p : plants){
+            favoritesList.add(p.getPlantName());
+        }
+
+        listView.setAdapter(arrayAdapter);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
             }
         });
 

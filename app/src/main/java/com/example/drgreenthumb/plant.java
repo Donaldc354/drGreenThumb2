@@ -18,7 +18,6 @@ public class plant {
     public float pHmin;
     public float pHmax;
 
-
     public plant(String plantName, int speciesID, String plantType, String toxicity,
              float matureHeight_ft, String lifeSpan, String bloomPeriod,
              float tempMin_f, String shadeTolerance, String salinityTolerance, String droughtTolerance, float precipitationMin_in, float precipitationMax_in,

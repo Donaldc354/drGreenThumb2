@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,6 +22,7 @@ import org.json.JSONObject;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class plantInfoPage extends AppCompatActivity {
 
@@ -32,7 +34,6 @@ public class plantInfoPage extends AppCompatActivity {
     Image plantImage;
     String plantImageString;
     JSONArray imageArray;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,27 @@ public class plantInfoPage extends AppCompatActivity {
 
         TextView txtView = (TextView) findViewById(R.id.txtPlantName2);
         txtView.setText(plantName);
+
+        final ImageView favoriteHeart = findViewById(R.id.favoriteHeart);
+        final PlantDatabaseHelper plantDatabaseHelper = new PlantDatabaseHelper(this);
+        final ArrayList<plant> plants = new ArrayList<>(plantDatabaseHelper.getFavorites());
+
+        if(plants.contains(resultPlant)){
+            favoriteHeart.setImageResource(R.drawable.favorite_true);
+        }
+
+        favoriteHeart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(plants.contains(resultPlant)){
+                    favoriteHeart.setImageResource(R.drawable.favorite_false);
+                    plantDatabaseHelper.removeFavorite(resultPlant);
+                } else {
+                    favoriteHeart.setImageResource(R.drawable.favorite_true);
+                    plantDatabaseHelper.insertFavorite(resultPlant);
+                }
+            }
+        });
 
         Button purchase = findViewById(R.id.btnPurchasePlant);
 
@@ -114,7 +136,6 @@ public class plantInfoPage extends AppCompatActivity {
         JSONObject precipitationMinObject = growthObject.getJSONObject("precipitation_minimum");
         JSONObject precipitationMaxObject = growthObject.getJSONObject("precipitation_maximum");
 
-
         plant t;
 
         try {
@@ -140,11 +161,6 @@ public class plantInfoPage extends AppCompatActivity {
         catch (NumberFormatException e){
             e.printStackTrace();
         }
-
-
-
-
-        return;
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {

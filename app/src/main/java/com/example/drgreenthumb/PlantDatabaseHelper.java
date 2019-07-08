@@ -5,21 +5,30 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class PlantDatabaseHelper extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME = "User.db";
+    public static final String DATABASE_NAME = "User";
     public static final String TABLE_NAME = "user_table";
     public static final String TABLE2_NAME = "favorites_table";
     public static final String TABLE3_NAME = "plant_table";
+    public static final String TABLE4_NAME = "alarm_table";
     public static final String COL_1 = "userID";
     public static final String COL_2 = "userEmail";
     public static final String COL_3 = "userPassword";
 
+    public PlantDatabaseHelper(wateringSchedule context){
+        super(context, DATABASE_NAME, null, 1);
+    }
+
+    public PlantDatabaseHelper(favoritesList context){
+        super(context, DATABASE_NAME, null, 1);
+    }
 
     public PlantDatabaseHelper(loginPage context) {
         super(context, DATABASE_NAME, null, 1);
-
     }
 
     public PlantDatabaseHelper(plantInfoPage context)
@@ -32,7 +41,7 @@ public class PlantDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("create table " + TABLE_NAME + " (userID INTEGER PRIMARY KEY AUTOINCREMENT, userEmail TEXT, userPassword TEXT )");
         db.execSQL("create table " + TABLE2_NAME + " (plantID INTEGER PRIMARY KEY, plantName TEXT)");
         db.execSQL("create table " + TABLE3_NAME + " (plantID INTEGER PRIMARY KEY, plantName TEXT, plantType TEXT, Toxicity TEXT, Height TEXT, lifeSpan TEXT, bloomPeriod TEXT, minTemp REAL, shadeTolerance TEXT, salinityTolerance TEXT, droughtTolerance TEXT, percipitationMin REAL, percipitationMax REAL, phMin REAL, phMax REAL )");
-        //db.execSQL("create table" + TABLE3_NAME + "plantID INTEGER PRIMARY KEY AUTOINCREMENT")
+        db.execSQL("create table " + TABLE4_NAME + " (requestCode INTEGER PRIMARY KEY, plantName TEXT, hr INTEGER, min INTEGER)");
     }
 
     @Override
@@ -40,6 +49,7 @@ public class PlantDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE2_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE3_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE4_NAME);
         onCreate(db);
     }
 
@@ -140,23 +150,71 @@ public class PlantDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public Boolean removeFavorite(plant p1){
+        SQLiteDatabase db = this.getWritableDatabase();
+        long success = db.delete(TABLE2_NAME,"plantName = " + p1.plantName, null);
+        if (success == -1){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
 
     /*public plant getFavorite(String plantname){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE2_NAME + " WHERE plantName = ?", new String[] {plantname});
         plant p1 = new plant(cursor.getString(0), cursor.getInt(1),cursor.getString(2), cursor.getString(3),cursor.getString(4),cursor.getFloat(5), cursor.getString(6), cursor.getString(7),cursor.getFloat(8),cursor.getString(9),cursor.getString(10), cursor.getString(11), cursor.getFloat(12),cursor.getFloat(13),cursor.getFloat(14),cursor.getFloat(15), cursor.getFloat(16));
         return p1;
-    }
+    }*/
 
     public ArrayList<plant> getFavorites(){
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<plant> plantList = new ArrayList<>();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE2_NAME , null);
         while(cursor.moveToNext()){
-            plant p1 = new plant(cursor.getString(0), cursor.getInt(1),cursor.getString(2), cursor.getString(3),cursor.getString(4),cursor.getFloat(5), cursor.getString(6), cursor.getString(7),cursor.getFloat(8),cursor.getString(9),cursor.getString(10), cursor.getString(11), cursor.getFloat(12),cursor.getFloat(13),cursor.getFloat(14),cursor.getFloat(15), cursor.getFloat(16));
+            plant p1 = new plant(cursor.getString(0), cursor.getInt(1),cursor.getString(2), cursor.getString(3),cursor.getFloat(4),cursor.getString(5), cursor.getString(6), cursor.getFloat(7),cursor.getString(8),cursor.getString(9),cursor.getString(10), cursor.getFloat(11), cursor.getFloat(12),cursor.getFloat(13),cursor.getFloat(14));
             plantList.add(p1);
         }
         return plantList;
-    }*/
+    }
 
+    /***********************ALARMS***************************/
+    public Boolean insertAlarm(int requestCode, String plantName, Calendar c){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("requestCode", requestCode);
+        contentValues.put("plantName", plantName);
+        contentValues.put("hr", c.get(Calendar.HOUR));
+        contentValues.put("min", c.get(Calendar.MINUTE));
+        long success = db.insert(TABLE4_NAME, null, contentValues);
+        if (success == -1){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    public Boolean removeAlarm(int requestCode){
+        SQLiteDatabase db = this.getWritableDatabase();
+        long success = db.delete(TABLE4_NAME,"requestCode = " + requestCode, null);
+        if (success == -1){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    public ArrayList<alarm> getAlarms(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<alarm> alarmList = new ArrayList<>();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE4_NAME + " ORDER BY requestCode DESC", null);
+        while(cursor.moveToNext()) {
+            alarm alarm = new alarm(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getInt(3));
+            alarmList.add(alarm);
+        }
+        return alarmList;
+    }
 }

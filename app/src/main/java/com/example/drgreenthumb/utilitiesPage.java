@@ -29,18 +29,6 @@ public class utilitiesPage extends AppCompatActivity {
             }
         });
 
-        Button interests = findViewById(R.id.btnInterests);
-
-        interests.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(utilitiesPage.this, interests.class);
-                Bundle bundle = new Bundle();
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
-
         Button personalization = findViewById(R.id.btnPersonalization);
 
         personalization.setOnClickListener(new View.OnClickListener() {

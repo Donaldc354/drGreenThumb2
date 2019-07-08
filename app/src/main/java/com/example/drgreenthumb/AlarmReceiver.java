@@ -12,10 +12,10 @@ public class AlarmReceiver extends BroadcastReceiver {
         Bundle bundle = intent.getExtras();
         String plantName = bundle.getString("PLANT_NAME");
         String message = "Your " + plantName + " might be a little thirsty!";
-        String val = bundle.getString("CHANNEL_NUM");
+        int val = bundle.getInt("CHANNEL_NUM");
         String channelID = "com.example.drgreenthumb.WATERING_REMINDER" + val;
         NotificationHelper notificationHelper = new NotificationHelper(context);
         NotificationCompat.Builder nb = notificationHelper.getNotification("Watering Reminder", message, channelID);
-        notificationHelper.getManager().notify(Integer.parseInt(val), nb.build());
+        notificationHelper.getManager().notify(val, nb.build());
     }
 }
